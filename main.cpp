@@ -15,6 +15,7 @@ void signal_handler(int signal) {
 int main(int argc, char* argv[]) {
     if(argc < 3) {
         printf("Not enough arguments!\n Example: LocalGamepadClient [ip] [port]");
+        return -1;
     }
     auto udp_client_instance = std::make_unique<udp_client>(argv[1], atoi(argv[2]));
     auto* sdl_gamepad_instance = new sdl_gamepad(std::move(udp_client_instance));

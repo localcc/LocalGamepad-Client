@@ -9,6 +9,11 @@
 #include <winsock2.h>
 #include <winsock.h>
 #include <ws2tcpip.h>
+#else
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
 #endif
 
 class udp_client {
@@ -22,7 +27,9 @@ public:
 
 private:
     sockaddr_in srv;
+#ifdef WIN32
     static int init_windows();
+#endif
     int sock_fd;
 };
 
