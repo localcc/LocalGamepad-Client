@@ -12,6 +12,9 @@
 #include <udp_client/udp_client.h>
 #include <bitset>
 #include <SDL.h>
+// Because sdl
+#undef main
+
 
 class sdl_gamepad {
 public:

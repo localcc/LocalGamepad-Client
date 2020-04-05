@@ -2,11 +2,31 @@
 #include <udp_client/udp_client.h>
 #include <memory>
 #include <thread>
-#undef main
-int main() {
-    auto udp_client_instance = std::make_unique<udp_client>("127.0.0.1", 5781);
+#include <csignal>
+
+volatile bool running = false;
+
+void signal_handler(int signal) {
+    if(signal == SIGINT) {
+        running = false;
+    }
+}
+
+int main(int argc, char* argv[]) {
+    if(argc < 3) {
+        printf("Not enough arguments!\n Example: LocalGamepadClient [ip] [port]");
+    }
+    auto udp_client_instance = std::make_unique<udp_client>(argv[1], atoi(argv[2]));
     auto* sdl_gamepad_instance = new sdl_gamepad(std::move(udp_client_instance));
-    std::thread([&](){sdl_gamepad_instance->handle();}).detach();
-    while(true){}
+    std::thread t1([&](){
+        sdl_gamepad_instance->handle();
+    });
+    t1.detach();
+    signal(SIGINT, signal_handler);
+    running = true;
+    while(running){}
+    sdl_gamepad_instance->stop();
+    delete sdl_gamepad_instance;
+
     return 0;
 }
