@@ -46,6 +46,9 @@ void sdl_gamepad::stop() {
 }
 
 sdl_gamepad::~sdl_gamepad() {
+    auto* disconnect_buf = new unsigned char[2]{9, this->client_id};
+    this->client->write_data(disconnect_buf, 2);
+    delete[] disconnect_buf;
     this->client.reset();
     SDL_GameControllerClose(this->gameController);
     SDL_Quit();
