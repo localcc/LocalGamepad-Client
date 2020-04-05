@@ -17,8 +17,7 @@ set(udp_client_src
 
 set(sdl_gamepad_src
 ${CMAKE_CURRENT_SOURCE_DIR}/include/sdl_gamepad/sdl_gamepad.h
-${CMAKE_CURRENT_SOURCE_DIR}/src/sdl_gamepad/sdl_gamepad.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/include/sdl_gamepad/controller_offsets.h)
+${CMAKE_CURRENT_SOURCE_DIR}/src/sdl_gamepad/sdl_gamepad.cpp)
 
 
 add_executable(${PROJECT_NAME} main.cpp ${udp_client_src} ${sdl_gamepad_src})

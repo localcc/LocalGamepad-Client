@@ -37,11 +37,12 @@ int udp_client::write_data(void *buf, int count) {
 
 int udp_client::read_data(void *buf, int count) {
     sockaddr_in from{};
-    int size = sizeof(from);
+    unsigned int size = sizeof(from);
     int ret = recvfrom(this->sock_fd, static_cast<char*>(buf), count, 0, reinterpret_cast<sockaddr*>(&from), &size);
     return ret;
 }
 
+#ifdef WIN32
 int udp_client::init_windows() {
     WSAData wsaData{};
     int res = WSAStartup(MAKEWORD(2, 2), &wsaData); // NOLINT(hicpp-signed-bitwise)
@@ -50,6 +51,7 @@ int udp_client::init_windows() {
     }
     return 0;
 }
+#endif
 
 void udp_client::disconnect() {
     this->write_data(new char[4]{9, 2, 4, 1}, 4);
