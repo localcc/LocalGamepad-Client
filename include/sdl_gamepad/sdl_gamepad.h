@@ -29,7 +29,7 @@ private:
     std::bitset<15> digital_data;
     short* analog_data;
     std::unique_ptr<udp_client> client;
-    char client_id;
+    unsigned char client_id;
     SDL_GameController* gameController;
     bool running{};
     const std::map<uint32_t, std::function<void(sdl_gamepad*, SDL_Event)>> event_handlers = {
