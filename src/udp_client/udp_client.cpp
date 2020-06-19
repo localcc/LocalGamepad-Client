@@ -37,7 +37,7 @@ int udp_client::write_data(void *buf, int count) {
 
 int udp_client::read_data(void *buf, int count) {
     sockaddr_in from{};
-    unsigned int size = sizeof(from);
+    int size = sizeof(from);
     int ret = recvfrom(this->sock_fd, static_cast<char*>(buf), count, 0, reinterpret_cast<sockaddr*>(&from), &size);
     return ret;
 }
